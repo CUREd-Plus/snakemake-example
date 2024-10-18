@@ -5,16 +5,16 @@ The contents of this repository are organised following [Snakemake reproducibili
 
 # Installation
 
-Create a virtual environment
+Create a [virtual environment](https://docs.python.org/3/library/venv.html)
 
 ```bash
-python -m venv venv
+python -m venv .venv
 ```
 
-Activate that environment
+Activate that environment (the specific command depends upon operating system)
 
 ```bash
-source venv/bin/activate
+source .venv/bin/activate
 ```
 
 Install dependencies
@@ -25,9 +25,9 @@ pip install -r requirements.txt
 
 # Usage
 
-Run the workflow
+Run the workflow using the [command line interface](https://snakemake.readthedocs.io/en/stable/executing/cli.html)
 
 ```bash
-snakemake
+snakemake <target_output_file>
 ```
 

@@ -1,0 +1,18 @@
+FYEAR_RANGE = (3, 22)
+FYEARS = [str(x).zfill(2) + str(y).zfill(2)
+          for x, y in zip(range(FYEAR_RANGE[0],FYEAR_RANGE[1]),range(FYEAR_RANGE[0] + 1,FYEAR_RANGE[1] + 1))]
+"Financial years"
+
+# Default target
+rule all:
+    input: expand("data/artificial_hes_op_202302_v1_sample_binary/artificial_hes_op_{fyear}.parquet",fyear=FYEARS)
+
+rule csv_to_binary:
+    input: "data/artificial_hes_op_202302_v1_sample/{financial_year}.csv"
+    output: "data/artificial_hes_op_202302_v1_sample_binary/{financial_year}.parquet"
+    log: "logs/csv_to_binary/{financial_year}.log"
+    run:
+        import duckdb
+
+        duckdb.sql(f"SET log_query_path = '{log[0]}'")
+        duckdb.sql(f"COPY(SELECT * FROM '{input[0]}') TO '{output[0]}'")
